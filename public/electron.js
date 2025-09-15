@@ -9,8 +9,8 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1500,
+    height: 1000,
     title: "Musicfy",
     // titleBarStyle: "hiddenInset",
     // resizable: false,
