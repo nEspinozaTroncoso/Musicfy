@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import { Auth } from "../../../api";
 import { initialValues, validationSchema } from "./RegisterForm.data";
 import "./RegisterForm.scss";
-import { useSearchParams } from "react-router-dom";
 
 const auth = new Auth();
 
