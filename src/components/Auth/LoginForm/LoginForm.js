@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Form, Icon } from "semantic-ui-react";
+import { initialValues, validationSchema } from "./LoginForm.data";
+import { useFormik } from "formik";
 import "./LoginForm.scss";
 
 export function LoginForm(props) {
@@ -8,15 +10,28 @@ export function LoginForm(props) {
 
   const onShowHiddenPassword = () => setShowPassword((prevState) => !prevState);
 
+  const formik = useFormik({
+    initialValues: initialValues(),
+    validationSchema: validationSchema(),
+    validateOnChange: false,
+    onSubmit: async (formValue) => {
+      console.log("formulario enviado");
+      console.log(formValue);
+    },
+  });
+
   return (
     <div className="login-form">
       <h1>Musica para todos</h1>
-      <Form>
+      <Form onSubmit={formik.handleSubmit}>
         <Form.Input
           name="email"
           type="text"
           placeholder="Correo electronico"
           icon="mail outline"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+          error={formik.errors.email}
         />
         <Form.Input
           name="password"
@@ -29,8 +44,11 @@ export function LoginForm(props) {
               onClick={onShowHiddenPassword}
             />
           }
+          onChange={formik.handleChange}
+          value={formik.values.password}
+          error={formik.errors.password}
         />
-        <Form.Button type="submit" primary fluid>
+        <Form.Button type="submit" primary fluid loading={formik.isSubmitting}>
           Inicia Sesión
         </Form.Button>
       </Form>
