@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Form, Icon } from "semantic-ui-react";
 import { initialValues, validationSchema } from "./LoginForm.data";
 import { useFormik } from "formik";
+import { Auth } from "../../../api";
 import "./LoginForm.scss";
+
+const auth = new Auth();
 
 export function LoginForm(props) {
   const { openRegister, goBack } = props;
@@ -15,8 +18,11 @@ export function LoginForm(props) {
     validationSchema: validationSchema(),
     validateOnChange: false,
     onSubmit: async (formValue) => {
-      console.log("formulario enviado");
-      console.log(formValue);
+      try {
+        await auth.login(formValue.email, formValue.password);
+      } catch (error) {
+        console.error(error);
+      }
     },
   });
 
